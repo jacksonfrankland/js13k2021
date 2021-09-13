@@ -1,6 +1,10 @@
 export {default as SunSystem} from './Sun';
 export {default as PhysicsSystem} from './Physics';
 export {default as StarfieldSystem} from './Starfield';
-export {default as ShipSystem} from './Ship';
 export {default as CameraSystem} from './Camera';
 export {default as RocketSystem} from './RocketSystem';
+export {default as LifeSpanSystem} from './LifeSpanSystem';
+export {default as SpawnerSystem} from './SpawnerSystem';
+export {default as ParticleSystem} from './ParticleSystem';
+export {default as SolarFlareSystem} from './SolarFlareSystem';
+export {default as CrystalSystem} from './CrystalSystem';

@@ -1,14 +1,19 @@
 import './style.css';
 import ecs from 'js13k-ecs';
-import {RigidBody, Transform, Star, Camera, Rocket} from './components';
-import { PhysicsSystem, StarfieldSystem, CameraSystem, SunSystem, RocketSystem } from './systems';
+import { updateScore } from './lib/score';
+import {RigidBody, Transform, Star, Camera, Rocket, MaxSpeed, LifeSpan, Spawner, Particle, SolarFlare, Crystal} from './components';
+import { PhysicsSystem, StarfieldSystem, CameraSystem, SunSystem, RocketSystem, LifeSpanSystem, SpawnerSystem, ParticleSystem, SolarFlareSystem, CrystalSystem } from './systems';
 
 let starsCtx = getCtx('#starfield');
+let particlesCtx = getCtx('#particles');
 let rocketCtx = getCtx('#rocket');
 let sunCtx = getCtx('#sun');
-let fpsCount = document.querySelector<HTMLElement>('#fps');
-ecs.register(Camera, RigidBody, Transform, Star, Rocket);
-ecs.process(new CameraSystem, new PhysicsSystem, new StarfieldSystem(starsCtx), new SunSystem(sunCtx), new RocketSystem(rocketCtx));
+let uiCtx = getCtx('#ui');
+// let fpsCount = document.querySelector<HTMLElement>('#fps');
+updateScore(0);
+
+ecs.register(Camera, RigidBody, Transform, Star, Rocket, MaxSpeed, LifeSpan, Spawner, Particle, SolarFlare, Crystal);
+ecs.process(new CameraSystem, new PhysicsSystem, new StarfieldSystem(starsCtx), new SunSystem(sunCtx), new CrystalSystem(rocketCtx), new RocketSystem(rocketCtx, uiCtx), new LifeSpanSystem, new SpawnerSystem, new ParticleSystem(particlesCtx), new SolarFlareSystem(rocketCtx));
 
 let oldTimestamp: number;
 function step (timestamp: number) {
@@ -17,7 +22,6 @@ function step (timestamp: number) {
     }
     let delta = timestamp - oldTimestamp;
     // fpsCount!.innerHTML = `FPS: ${Math.floor(1000 / delta)}`;
-    // console.log(1000 / delta);
     oldTimestamp = timestamp
     ecs.update(Math.min(delta, 100));
     requestAnimationFrame(step);

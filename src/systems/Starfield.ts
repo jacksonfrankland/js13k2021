@@ -1,5 +1,5 @@
 import { vec } from '../lib/Vector';
-export default class Starfield {
+export default class {
 
     constructor (private ctx: CanvasRenderingContext2D) {
         this.draw();
@@ -22,17 +22,6 @@ export default class Starfield {
         }
     }
 
-    update (delta: number) {
-        // this.ctx.fillStyle = `rgba(0, 0, 0, ${delta / 100})`;
-        // this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-        // ecs.select(Star, RigidBody, Transform).iterate(entity => {
-        //     if (entity.get(Transform).position.x < 0) {
-        //         entity.get(Transform).position.x = window.innerWidth + 5;
-        //     }
-        //     this.ctx.fillStyle = 'gray';
-        //     this.ctx.beginPath();
-        //     this.ctx.arc(entity.get(Transform).position.x, entity.get(Transform).position.y, entity.get(Star).size * 10, 0, 2 * Math.PI);
-        //     this.ctx.fill();
-        // });
+    update (_: number) {
     }
 }

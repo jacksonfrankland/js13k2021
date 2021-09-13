@@ -27,12 +27,37 @@ export class Vector {
         return new Vector(this.x / magnitude * scale, this.y / magnitude * scale);
     }
 
+    clamp (a: Vector, b: Vector) {
+        let clamped = this.copy;
+        if (clamped.x < a.x && clamped.x < b.x) {
+            clamped.x = Math.min(a.x, b.x);
+        }
+        if (clamped.x > a.x && clamped.x > b.x) {
+            clamped.x = Math.max(a.x, b.x);
+        }
+        if (clamped.y < a.y && clamped.y < b.y) {
+            clamped.y = Math.min(a.y, b.y);
+        }
+        if (clamped.y > a.y && clamped.y > b.y) {
+            clamped.y = Math.max(a.y, b.y);
+        }
+        return clamped;
+    }
+
     get magnitudeSquared () {
         return this.x * this.x + this.y * this.y;
     }
 
     get magnitude () {
         return Math.sqrt(this.magnitudeSquared);
+    }
+
+    get copy () {
+        return new Vector(this.x, this.y);
+    }
+
+    get angle () {
+        return Math.PI / 2 - Math.atan2(this.y * -1, this.x);
     }
 
     static fromAngle (angle: number) {

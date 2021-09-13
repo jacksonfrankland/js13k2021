@@ -1,13 +1,15 @@
 import ecs, { Selector } from 'js13k-ecs';
 import {vec} from '../lib/Vector';
-import { RigidBody, Transform } from '../components';
+import { MaxSpeed, RigidBody, Transform } from '../components';
 
-export default class Physics {
+export default class {
 
     private selector: Selector;
+    private maxSpeedSelector: Selector;
 
     constructor () {
         this.selector = ecs.select(RigidBody, Transform);
+        this.maxSpeedSelector = ecs.select(RigidBody, MaxSpeed);
     }
 
     update (delta: number) {
@@ -18,5 +20,10 @@ export default class Physics {
             transform.position = transform.position.add(rigidBody.velocity.scaleBy(delta));
             rigidBody.acceleration = vec(0, 0);
         });
+        this.maxSpeedSelector.iterate(entity => {
+            let maxSpeed = entity.get(MaxSpeed).value;
+            let rigidBody = entity.get(RigidBody);
+            rigidBody.velocity = rigidBody.velocity.max(maxSpeed);
+        })
     }
 }
